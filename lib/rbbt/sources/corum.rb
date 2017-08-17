@@ -10,8 +10,8 @@ module CORUM
     Organism.default_code(org)
   end
 
-  CORUM.claim CORUM.complex_names, :proc do 
-    url = "http://mips.helmholtz-muenchen.de/corum/download/allComplexes.txt"
+  CORUM.claim CORUM.complex_names, :proc do
+    url = "http://mips.helmholtz-muenchen.de/corum/download/allComplexes.txt.zip"
     tsv = TSV.open(url, :header_hash => "", :sep2 => ';', :fix => Proc.new{|l| "CORUM:" + l.gsub('"','')})
     tsv.namespace = organism
     tsv.fields = tsv.fields.collect{|f| f.gsub('"','')}
@@ -21,8 +21,8 @@ module CORUM
     tsv
   end
 
-  CORUM.claim CORUM.complexes, :proc do 
-    url = "http://mips.helmholtz-muenchen.de/corum/download/allComplexes.txt"
+  CORUM.claim CORUM.complexes, :proc do
+    url = "http://mips.helmholtz-muenchen.de/corum/download/allComplexes.txt.zip"
     tsv = TSV.open(url, :header_hash => "", :sep2 => ';', :fix => Proc.new{|l| "CORUM:" + l.gsub('"','')})
     tsv.namespace = organism
     tsv.fields = tsv.fields.collect{|f| f.gsub('"','')}.collect{|f|
