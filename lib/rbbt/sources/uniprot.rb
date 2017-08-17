@@ -21,7 +21,7 @@ module UniProt
     tsv.unnamed = true
     tsv.process "Amino Acid Mutation" do |mutations|
       mutations.collect do |mutation|
-        if mutation.match(/p\.(\w{3})(\d+)(\w{3})/)
+        if mutation =~ /p\.(\w{3})(\d+)(\w{3})/
           wt = Misc::THREE_TO_ONE_AA_CODE[$1.downcase]
           mut = Misc::THREE_TO_ONE_AA_CODE[$3.downcase]
           [wt, $2, mut] * ""
@@ -147,10 +147,10 @@ module UniProt
       end
       value = part.gsub("\nFT", '').gsub(/\s+/, ' ')
       case
-      when value.match(/(\d+) (\d+) (.*)/)
+      when value =~ /(\d+) (\d+) (.*)/
         start, eend, description = $1, $2, $3
         description.gsub(/^FT\s+/m, '')
-      when value.match(/^\s+(\d+) (\d+)/)
+      when value =~ /^\s+(\d+) (\d+)/
         start, eend = $1, $2
         description = nil
       else
@@ -196,9 +196,9 @@ module UniProt
         value = part.gsub("\nFT", '').gsub(/\s+/, ' ')
         # 291 291 K -> E (in sporadic cancers; somatic mutation). /FTId=VAR_045413.
         case
-        when value.match(/(\d+) (\d+) ([A-Z])\s*\-\>\s*([A-Z]) (.*)\. \/FTId=(.*)/)
+        when value =~ /(\d+) (\d+) ([A-Z])\s*\-\>\s*([A-Z]) (.*)\. \/FTId=(.*)/
           start, eend, ref, mut, desc, id = $1, $2, $3, $4, $5, $6
-        when value.match(/(\d+) (\d+) (.*)\. \/FTId=(.*)/)
+        when value =~ /(\d+) (\d+) (.*)\. \/FTId=(.*)/
           start, eend, ref, mut, desc, id = $1, $2, nil, nil, $3, $4
         else
           Log.debug "Value not understood: #{ value }"

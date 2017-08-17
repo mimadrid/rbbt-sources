@@ -10,20 +10,20 @@ define_source_tasks "genes" => "http://www.pharmgkb.org/commonFileDownload.actio
 
 process_tsv :diseases, 'diseases', 
   :header_hash => "",
-  :fix => proc{|l| l.gsub(/","/,'|').gsub(/"/,'').gsub(/,(\t|$)/,'\1')} do
+  :fix => proc{|l| l.gsub(/","/,'|').delete('"').gsub(/,(\t|$)/,'\1')} do
   headers ['PhGKB Disease ID']
 end
 
 process_tsv :identifiers, 'genes', 
   :header_hash => "",
-  :fix => proc{|l| l.gsub(/","/,'|').gsub(/"/,'').gsub(/,(\t|$)/,'\1')} do
+  :fix => proc{|l| l.gsub(/","/,'|').delete('"').gsub(/,(\t|$)/,'\1')} do
   headers ['PhGKB Gene ID', 'Entrez Gene ID', 'Ensembl Gene Id', 'UniProt/SwissProt Accession', 'Long Name', 'Associated Gene Name']
 end
 
 process_tsv :drugs, 'drugs', 
   :header_hash => "",
   :fields => ['Name', 'DrugBank Id', 'SMILES', "MeSH IDs"],
-  :fix => proc{|l| l.gsub(/","/,'|').gsub(/"/,'').gsub(/,(\t|$)/,'\1')} do
+  :fix => proc{|l| l.gsub(/","/,'|').delete('"').gsub(/,(\t|$)/,'\1')} do
   headers ['PhGKB Drug ID', 'Drug Name', 'DrugBank Id', 'SMILES', "MeSH ID"]
 end
 

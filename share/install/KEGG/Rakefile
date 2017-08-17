@@ -64,7 +64,7 @@ file :drugs => 'source/drugs' do |t|
       end
 
       if line =~ /^DBLINKS(.*)/
-        $1.match(/PubChem: (\d*)/)
+        $1 =~ /PubChem: (\d*)/
         pubchem = $1
         next unless pubchem
         info[drug] ||= [[],[]]

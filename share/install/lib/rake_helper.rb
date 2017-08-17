@@ -41,7 +41,7 @@ def process_tsv(file, source, options = {}, &block)
   $__tsv_tasks << file
 
   file file => File.join(SOURCE_DIR, source) do |t|
-    block.call
+    yield
 
     d = TSV.open(t.prerequisites.first, options)
 

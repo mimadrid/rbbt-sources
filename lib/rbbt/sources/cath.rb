@@ -130,7 +130,7 @@ module Cath
 
         result = CMD.cmd("fasta35 #{ target } #{ domain }").read
 
-        if result.match(/([\d\.]+)% identity.*overlap \((\d+)-(\d+):/s)
+        if result =~ /([\d\.]+)% identity.*overlap \((\d+)-(\d+):/s
           {:identity => $1.to_f, :range => ($2.to_i..$3.to_i)}
         else
           false
